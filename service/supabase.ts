@@ -1,10 +1,9 @@
 import 'react-native-url-polyfill/auto'
 import { createClient } from '@supabase/supabase-js'
 import { Database } from '../database.types'
-import dotenv from 'dotenv'
-dotenv.config()
+
 // Create a single supabase client for interacting with your database
-const supabase = createClient<Database>(process.env.URL, process.env.KEY)
+const supabase = createClient<Database>("", "")
 
 export async function GetLista(){
 	const { data, error } = await supabase

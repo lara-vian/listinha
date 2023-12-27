@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { colors } from "../colors";
+import colors from "../colors";
 //Screens
 import Add from "./screens/add";
 import Lista from "./screens/lista";
@@ -33,12 +33,12 @@ export default function MainContainer() {
 							iconName = focused ? "cart" : "cart-outline";
 						}
 
-						return <Ionicons name={iconName} size={size} color={color} />
+						return <Ionicons name={iconName} size={size+10} color={color} />
 					},
-					tabBarActiveTintColor: colors.amarelo,
+					tabBarActiveTintColor: colors.secundaria,
 					tabBarInactiveTintColor: "white",
 					tabBarShowLabel: false,
-					tabBarStyle: { backgroundColor: colors.fundoVermelho, height: 80 },
+					tabBarStyle: { backgroundColor: colors.primaria, height: 80 },
 					headerShown: false,
 				})}
 			>

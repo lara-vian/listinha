@@ -3,13 +3,9 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import colors from "../../colors";
 import { DeleteCarrinho, GetCarrinho } from "../../service/supabase";
 import { useState } from "react";
+import React from "react";
 
-interface ICarrinho{
-	nome: string,
-	quantidade: number,
-	id: number,
-	preco: number
-}
+
 interface ConstroiCarrinhoProps {
 	carrinho: ICarrinho[], 
 	reload: () => void
