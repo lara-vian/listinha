@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { InsertLista } from "../../service/supabase";
+import { supabase } from "../../service/supabase";
 import colors from "../../colors";
 import { useForm, Controller } from "react-hook-form";
 import React from "react";
@@ -10,6 +10,15 @@ type data = {
 	quantidade: number
 }
 export default function Add() {
+	async function InsertLista(nome:string, quantidade:number){
+		const { error } = await supabase
+		.from('lista')
+		.insert({ nome: nome, quantidade: quantidade })
+	
+		if(error){
+			console.log(error)
+		}
+	}
 	const {
 		control,
 		handleSubmit,

@@ -1,16 +1,37 @@
 import { StyleSheet, SafeAreaView, ScrollView, View, Text, TouchableOpacity } from "react-native";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Ionicons from "react-native-vector-icons/Ionicons"
 import colors from "../../colors";
-import { DeleteCarrinho, GetCarrinho } from "../../service/supabase";
+import { supabase } from "../../service/supabase";
 import { useState } from "react";
 import React from "react";
 
+interface ICarrinho{
+	id: number,
+	nome: string,
+	quantidade: number
+	preco: number
+}
 
 interface ConstroiCarrinhoProps {
 	carrinho: ICarrinho[], 
 	reload: () => void
 }
 export default function Lista() {
+
+	const GetCarrinho = async ()=>{
+		const { data, error } = await supabase
+		.from('carrinho')
+		.select("*")
+	
+		if(error){
+			console.log(error)
+		}
+		if(data){
+			return data
+		}
+	}
+	
 	const [carrinho, setCarrinho] = useState<ICarrinho[]>([])
 	const [preco, setPreco] = useState(0)
 	const AtualizaPreco = () =>{
@@ -52,6 +73,16 @@ export default function Lista() {
 	)
 }
 function ConstroiCarrinho({carrinho, reload}: ConstroiCarrinhoProps) {
+	const DeleteCarrinho = async (id:number)=>{
+		const { error } = await supabase
+		.from('carrinho')
+		.delete()
+		.eq("id", id)
+	
+		if(error){
+			console.log(error)
+		}
+	}
 	const Delete = (id: number) => {
 		DeleteCarrinho(id)
 	}
@@ -77,66 +108,90 @@ function ConstroiCarrinho({carrinho, reload}: ConstroiCarrinhoProps) {
 		</View>
 	)
 }
+
 const Style = StyleSheet.create({
 	container: {
-		height: '85%',
-		width: '95%',
+		height: hp('75%'),
+		width: wp('95%'),
+		marginTop: 20,
 		borderRadius: 20,
-		borderColor: "white",
+		borderColor: colors.primaria,
 		borderWidth: 3,
-		backgroundColor: colors.fundoVermelho,
+		backgroundColor: "white",
 		alignItems: 'center',
-		justifyContent: 'space-evenly',
+		justifyContent: 'space-around',
 	},
 	title: {
 		height: "auto",
-		width: "95%",
+		width: wp('90%'),
 		borderRadius: 20,
-		borderColor: "white",
+		borderColor: colors.add,
 		borderWidth: 3,
 		padding: 18,
-		backgroundColor: colors.add,
-		color: "white",
+		backgroundColor: "white",
+		color: colors.add,
 		fontSize: 40,
 	},
 	label: {
 		height: "auto",
-		width: "95%",
+		width: wp('90%'),
 		borderRadius: 20,
-		borderColor: "white",
+		borderColor: colors.primaria,
 		borderWidth: 3,
 		padding: 18,
-		backgroundColor: colors.vermelho,
-		color: "white",
+		backgroundColor: "white",
+		color: colors.primaria,
 		fontSize: 35,
 	},
 	input: {
 		height: "auto",
-		width: "95%",
-		borderRadius: 20,
-		borderColor: "white",
+		width: wp('90%'),
+		borderBottomColor: colors.primaria,
+		borderRightColor: "transparent",
+		borderLeftColor: "transparent",
+		borderTopColor: "transparent",
 		borderWidth: 3,
-		color: "white",
+		color: colors.primaria,
 		fontSize: 35,
 		padding: 18,
-		backgroundColor: colors.fundoAmarelo,
+		backgroundColor: "white",
 	},
 	button: {
 		height: "auto",
-		width: "auto",
+		width: wp('95%'),
+		marginTop: 20,
 		borderRadius: 20,
-		borderColor: "white",
+		borderColor: colors.add,
 		borderWidth: 3,
 		padding: 18,
-		backgroundColor: colors.add,
-		color: "white",
+		backgroundColor: "white",
+		color: colors.add,
 		fontSize: 35,
+		textAlign: 'center',
 	},
 	containerItem:{
 		height: "auto",
-		width: 350,
+		width: wp('90%'),
 		borderRadius: 20,
-		borderColor: "white",
+		borderColor: colors.primaria,
+		borderWidth: 3,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		gap: 15,
+		padding: 10,
+		margin: 10,
+		backgroundColor: "white",
+
+	},
+	containerTextItem:{
+		height: "auto",
+		width: wp('85%'),
+		borderBottomColor: colors.primaria,
+		borderRightColor: "transparent",
+		borderLeftColor: "transparent",
+		borderTopColor: "transparent",
 		borderWidth: 3,
 		display: 'flex',
 		flexDirection: 'row',
@@ -145,11 +200,23 @@ const Style = StyleSheet.create({
 		gap: 15,
 		padding: 10,
 		margin: 10,
-		backgroundColor: colors.amarelo,
-
+		backgroundColor: "white",
+	},
+	inputItem:{
+		height: "auto",
+		width: wp('85%'),
+		borderBottomColor: colors.primaria,
+		borderRightColor: "transparent",
+		borderLeftColor: "transparent",
+		borderTopColor: "transparent",
+		borderWidth: 3,
+		color: colors.primaria,
+		fontSize: 30,
+		padding: 18,
+		backgroundColor: "white",
 	},
 	textItem:{
-		fontSize: 30,
-		color: "white",
+		fontSize: 35,
+		color: colors.primaria,
 	}
 })

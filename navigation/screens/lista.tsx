@@ -2,7 +2,7 @@ import { StyleSheet, SafeAreaView, ScrollView, View, Text, TouchableOpacity, Tex
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Ionicons from "react-native-vector-icons/Ionicons"
 import colors from "../../colors";
-import { DeleteLista ,GetLista, InsertCarrinho } from "../../service/supabase";
+import { supabase } from "../../service/supabase";
 import { useState } from "react";
 import React from "react";
 
@@ -18,6 +18,20 @@ interface ConstroiListaProps {
 }
 export default function Lista() {
 	const [lista, setLista] = useState<ILista[]>([])
+	const  GetLista = async() =>{
+		const { data, error } = await supabase
+		.from('lista')
+		.select("*")
+		
+		if(data){
+			return data
+		}
+	
+		if(error){
+			console.log(error)
+		}
+	}
+
 	const Reload = () => {
 		GetLista().then((data) => {
 			if(data) {
@@ -45,7 +59,25 @@ export default function Lista() {
 	)
 }
 function ConstroiLista({lista, reload}: ConstroiListaProps) {
-
+	const DeleteLista = async (id:number) =>{
+		const { error } = await supabase
+		.from('lista')
+		.delete()
+		.eq("id", id)
+	
+		if(error){
+			console.log(error)
+		}
+	}
+	const InsertCarrinho = async (nome:string, quantidade:number, preco: number)=>{
+		const { error } = await supabase
+		.from('carrinho')
+		.insert({ nome: nome, quantidade: quantidade, preco: preco })
+	
+		if(error){
+			console.log(error)
+		}
+	}
 	return (
 		<View>{
 			lista.map((item) => (
