@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import colors from "../colors";
+import colors from "./style/colors";
 //Screens
 import Add from "./screens/add";
 import Lista from "./screens/lista";
@@ -27,13 +27,13 @@ export default function MainContainer() {
 
             if (rn === names.Add) {
               iconName = focused ? "add-circle" : "add-circle-outline";
-            } else if( rn === names.Lista) {
+            } else if (rn === names.Lista) {
               iconName = focused ? "list" : "list-outline";
-            } else if( rn === names.Carrinho) {
+            } else if (rn === names.Carrinho) {
               iconName = focused ? "cart" : "cart-outline";
             }
 
-            return <Ionicons name={iconName} size={size+10} color={color} />
+            return <Ionicons name={iconName} size={size + 10} color={color} />
           },
           tabBarActiveTintColor: colors.secundaria,
           tabBarInactiveTintColor: "white",
