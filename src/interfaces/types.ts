@@ -4,10 +4,10 @@ interface IData {
 }
 
 interface IList {
-  id: number,
-  name: string,
-  quantity: number
-  price?: number
+  id: number;
+  name: string;
+  quantity: number;
+  price?: number;
 }
 
 interface ICar {
