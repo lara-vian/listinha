@@ -1,8 +1,8 @@
 import React from 'react';
-import MainContainer from './src/navigation/mainContainer';
+import NavigationDrawer from './src/navigation';
 
 export default function App() {
   return (
-    <MainContainer />
+    <NavigationDrawer />
   );
 }
